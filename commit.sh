@@ -4,5 +4,5 @@ git add --all
 timestamp() {
   date +"at %H:%M:%S on %d/%m/%Y"
 }
-git commit -am "Working on this Project $(timestamp)"
+git commit -am "Working on this Project00 $(timestamp)"
 git push origin master
