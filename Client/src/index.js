@@ -1,0 +1,14 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import Main from './Main';
+import './index.css'
+
+const Web = () =>{
+	return (
+		<>
+		<Main/> 
+		</> 
+		);
+} 
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Web />);
