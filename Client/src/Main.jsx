@@ -1,25 +1,25 @@
-import React from 'react';
-import {BrowserRouter as Router,Routes, Route} from 'react-router-dom';
-import Home from './Pages/Home';
-import About from './Pages/About';
-import Contact from './Pages/Contact';
-import Portfolio from './Pages/Portfolio';
-import Certificates from './Pages/Certificates';
-
-
-function Main(){
-  return(
-    <> 
-    <Router>
-    <Routes>
-    <Route exact path="/" element={<Home/>} />
-    <Route path="/About" element={<About />} />
-    <Route path="/Contact" element={<Contact/>} />
-    <Route path="/Portfolio" element={<Portfolio/>} />
-    <Route path="/Certificates" element={<Certificates/>} />
-    </Routes>
-    </Router>
-    </>
-    )
+import React from "react";
+ 
+// We use Route in order to define the different routes of our application
+import { Route, Routes } from "react-router-dom";
+ 
+// We import all the components we need in our app
+import Navbar from "./components/navbar";
+import RecordList from "./components/recordList";
+import Edit from "./components/edit";
+import Create from "./components/create";
+ 
+const Main = () => {
+ return (
+   <div>
+     <Navbar />
+     <Routes>
+       <Route exact path="/" element={<RecordList />} />
+       <Route path="/edit/:id" element={<Edit />} />
+       <Route path="/create" element={<Create />} />
+     </Routes>
+   </div>
+ );
 };
+ 
 export default Main;
