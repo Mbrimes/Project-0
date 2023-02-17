@@ -30,7 +30,7 @@ recordRoutes.route("/record/:id").get(function (req, res){
 	.collection("records")
 	.findOne(myquery, function (err, result) {
 		if (err) throw err;
-		res.json(result);
+		res.json(result);s
 	});
 });
 
