@@ -1,6 +1,9 @@
 const {MongoClient} = require('mongodb');
-const Db = "mongodb+srv://Marabs:cMO5PuJHYQwwF8q9@cluster0.0h9y9gr.mongodb.net/employees?retryWrites=true&w=majority";
-const client = new MongoClient(Db);
+const Db = process.env.ATLAS_URI;
+const client = new MongoClient(Db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 async function run() {
 	try{
