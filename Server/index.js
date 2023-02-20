@@ -1,23 +1,20 @@
-const {MongoClient} = require('mongodb');
-const Db = process.env.ATLAS_URI;
-const client = new MongoClient(Db, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const { MongoClient } = require('mongodb');
+
+const uri = "mongodb+srv://Marabs:cMO5PuJHYQwwF8q9@cluster0.0h9y9gr.mongodb.net/blog?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
 
 async function run() {
-	try{
-		await client.connect();
-		const db = client.db('employees');
-		const collection = db.collection('records');
+  try {
+    await client.connect();
+    const db = client.db('blog');
+    const collection = db.collection('posts');
 
-		//find the first document in the collection
-		const first = await collection.findOne();
-		console.log(first);
-	}
-	finally {
-			//close the database connection when finished or an error occurs
-			await client.close();
-		}
+    // Find the first document in the collection
+    const first = await collection.findOne();
+    console.log(first);
+  } finally {
+    // Close the database connection when finished or an error occurs
+    await client.close();
+  }
 }
-run().catch(console.error)
+run().catch(console.error);
