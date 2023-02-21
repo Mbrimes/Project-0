@@ -4,7 +4,7 @@ const connectDB = require('./config/db');
 const app = express();
 
 //connect Database
-connectDB();
+connectDB();s
 
 app.get('/', (req, res) => res.send('Another Day to work Harder'));
 
