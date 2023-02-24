@@ -1,0 +1,11 @@
+a {
+  color: darkred;
+  font-size: 24px;
+  font-weight: bold;
+  transition: all; }
+  a li {
+    color: whitesmoke;
+    text-decoration: underline;
+    border: 1px solid indianred; }
+  a p {
+    color: skyblue; }
