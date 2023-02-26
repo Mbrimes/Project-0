@@ -9,8 +9,8 @@ const books = require('./routes/api/books');
 
 const app = express(); 
 
-const dbs = require("./models");
-const Role = dbs.role;
+const db = require("./models");
+const Role = db.role;
 
 // Connect Database
 connectDB();
