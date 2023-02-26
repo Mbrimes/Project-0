@@ -5,9 +5,7 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 
 // routes
-const books = require('./routes/api/books');
-const user = require('./routes/user.routes.js');
-const role = require('./routes/role.routes.js');
+const books = require('./routes/api/books'); 
 
 const app = express();
 
