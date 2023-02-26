@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../Main.css';
+import '../build/css/Main.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import BookCard from './BookCard';

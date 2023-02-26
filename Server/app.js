@@ -18,6 +18,9 @@ app.use(cors({ origin: true, credentials: true }));
 // Init Middleware
 app.use(express.json({ extended: false }));
 
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
 app.get('/', (req, res) => res.send('Hello world am done with MERN Stack!'));
 
 // use Routes
