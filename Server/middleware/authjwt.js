@@ -55,7 +55,7 @@ isModerator = (req, res, next) => {
 	User.findById(req.userId).exec((err, user) => {
 		if (err) {
 			res.status(500).send({ message: err });
-			return:
+			return;
 		}
 
 		Role.find(
