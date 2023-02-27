@@ -6,8 +6,8 @@ const cors = require('cors');
 
 // routes
 const books = require('./routes/api/books'); 
-const auth = require('./routes/auth.routes')(app);
-const user = require('./routes/user.routes')(app);
+const auth = require('./routes/auth.routes');
+const user = require('./routes/user.routes');
 
 const app = express();  
 
