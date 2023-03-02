@@ -31,10 +31,11 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div className="container">
-        <header className="jumbotron">
+      <div>
+        <header>
           <h3>{this.state.content}</h3>
         </header>
+        <h3>JHDBJFDBUJ</h3>
       </div>
     );
   }

@@ -11,7 +11,7 @@ import BoardUser from "./components/board-user";
 import BoardModerator from "./components/board-moderator";
 import BoardAdmin from "./components/board-admin";
 
-class App extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
     this.logOut = this.logOut.bind(this);
@@ -132,4 +132,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Main;
