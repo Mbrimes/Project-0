@@ -11,7 +11,7 @@ import BoardUser from "./components/board-user";
 import BoardModerator from "./components/board-moderator";
 import BoardAdmin from "./components/board-admin";
 
-class Main extends Component {
+function Main{
   constructor(props) {
     super(props);
     this.logOut = this.logOut.bind(this);
@@ -43,9 +43,8 @@ class Main extends Component {
       currentUser: undefined,
     });
   }
-
-  render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+ 
+    const { currentUser, showModeratorBoard, showAdminBoard } = this.state; 
 
     return (
       <div>
@@ -130,6 +129,6 @@ class Main extends Component {
       </div>
     );
   }
-}
+
 
 export default Main;
