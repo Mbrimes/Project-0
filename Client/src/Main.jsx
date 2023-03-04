@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
 import AuthService from "./services/auth.service";
@@ -11,41 +11,29 @@ import BoardUser from "./components/board-user";
 import BoardModerator from "./components/board-moderator";
 import BoardAdmin from "./components/board-admin";
 
-function Main{
-  constructor(props) {
-    super(props);
-    this.logOut = this.logOut.bind(this);
 
-    this.state = {
-      showModeratorBoard: false,
-      showAdminBoard: false,
-      currentUser: undefined,
-    };
-  }
+const Main = (props) => {
+  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [currentUser, setCurrentUser] = useState(undefined);
 
-  componentDidMount() {
-    const user = AuthService.getCurrentUser();
 
-    if (user) {
-      this.setState({
-        currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
-      });
-    }
-  }
+  useEffect(() => {
+        const user = AuthService.getCurrentUser();
+        if (user){
+          setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
+          setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+          setCurrentUser(user);
+        }
+  }, []);
 
-  logOut() {
+  const logOut = () => {
     AuthService.logout();
-    this.setState({
-      showModeratorBoard: false,
-      showAdminBoard: false,
-      currentUser: undefined,
-    });
+          setShowModeratorBoard(showModeratorBoard);
+          setShowAdminBoard(showAdminBoard);
+          setCurrentUser(currentUser);
   }
- 
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state; 
-
+  
     return (
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -92,7 +80,7 @@ function Main{
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="/login" className="nav-link" onClick={this.logOut}>
+                <a href="/login" className="nav-link" onClick={logOut}>
                   LogOut
                 </a>
               </li>

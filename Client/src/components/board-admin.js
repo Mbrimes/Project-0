@@ -1,43 +1,31 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
 import UserService from "../services/user.service";
 
-export default class BoardAdmin extends Component {
-  constructor(props) {
-    super(props);
+const BoardAdmin = (props) => {
+  const [content, setContent] = useState("");
 
-    this.state = {
-      content: ""
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     UserService.getAdminBoard().then(
       response => {
-        this.setState({
-          content: response.data
-        });
+        setContent(response.data);
       },
       error => {
-        this.setState({
-          content:
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString()
-        });
-      }
-    );
-  }
-
-  render() {
-    return (
+        setContent(
+          (error.response && error.response.data &&
+          error.response.data.message) || error.message ||
+          error.toString()
+          );
+      });
+  });
+ 
+     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>{this.state.content}</h3>
+          <h3>{content}</h3>
         </header>
       </div>
     );
-  }
-}
+  };
+
+export default BoardAdmin;

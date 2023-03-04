@@ -1,35 +1,30 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
 
-export default class Profile extends Component {
-  constructor(props) {
-    super(props);
+const Profile = (props) =>{
+  const [redirect, setRedirect] = useState(null);
+  const [userReady, setUserReady] = useState(false);
+  const [currentUser, setCurrentUser] = useState({username: ""});
 
-    this.state = {
-      redirect: null,
-      userReady: false,
-      currentUser: { username: "" }
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() =>{
     const currentUser = AuthService.getCurrentUser();
 
-    if (!currentUser) this.setState({ redirect: "/home" });
-    this.setState({ currentUser: currentUser, userReady: true })
-  }
-
-  render() {
-    if (this.state.redirect) {
-      return <Navigate to={this.state.redirect} />
+    if(!currentUser){
+     setRedirect({redirect:"/home"});
+    setCurrentUser({ currentUser: currentUser });
+    setUserReady({ userReady: true });
     }
+  }, []);
 
-    const { currentUser } = this.state;
+  if (redirect) {
+    return <Navigate to = {redirect}/>
+  } 
 
+  
     return (
       <div className="container">
-        {(this.state.userReady) ?
+        {(userReady) ?
         <div>
         <header className="jumbotron">
           <h3>
@@ -57,5 +52,6 @@ export default class Profile extends Component {
       </div>: null}
       </div>
     );
-  }
-}
+  }; 
+
+  export default Profile;
