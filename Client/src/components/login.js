@@ -72,7 +72,7 @@ class Login extends Component {
             loading: false,
             message: resMessage
           });
-        }ujk
+        }
       );
     } else {
       this.setState({
