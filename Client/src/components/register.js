@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -46,97 +46,69 @@ const vpassword = value => {
   }
 };
 
-export default class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.handleRegister = this.handleRegister.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
+const Register = () =>{
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
 
-    this.state = {
-      username: "",
-      email: "",
-      password: "",
-      successful: false,
-      message: ""
-    };
-  }
+  const onChangeUsername = e => {
+    setUsername(e.target.value)
+  };
+  const onChangeEmail = e => {
+    setEmail(e.target.value)
+  };
+const onChangePassword = e => {
+  setPassword(e.target.value)
+};
 
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value
-    });
-  }
+const handleRegister = e => {
+  e.preventDefault();
 
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
+  setMessage({message: ""})
+  setSuccessful({successful: false})
 
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value
-    });
-  }
+  this.form.validateAll();
 
-  handleRegister(e) {
-    e.preventDefault();
-
-    this.setState({
-      message: "",
-      successful: false
-    });
-
-    this.form.validateAll();
-
-    if (this.checkBtn.context._errors.length === 0) {
-      AuthService.register(
-        this.state.username,
-        this.state.email,
-        this.state.password
-      ).then(
-        response => {
-          this.setState({
-            message: response.data.message,
-            successful: true
-          });
-        },
-        error => {
-          const resMessage =
+  if (this.checkBtn.context._errors.length === 0) {
+    AuthService.register(
+      {username}, {email}, {password}).then(
+      response =>{
+        setMessage(response.data.message)
+        setSuccessful({successful: true})
+      },
+      error =>{
+        const resMessage =
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
             error.message ||
             error.toString();
 
-          this.setState({
-            successful: false,
-            message: resMessage
-          });
-        }
+            setMessage(resMessage)
+            setSuccessful({successful:false});
+      }
       );
-    }
-  }
+  } 
+}
 
-  render() {
-    return (
+     return (
       <div className="col-md-12">
         <div className="card card-container">
-          <img
+         {/* <img
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
             alt="profile-img"
             className="profile-img-card"
-          />
+          />*/}
 
           <Form
-            onSubmit={this.handleRegister}
+            onSubmit={handleRegister}
             ref={c => {
               this.form = c;
             }}
           >
-            {!this.state.successful && (
+            {!{successful} && (
               <div>
                 <div className="form-group">
                   <label htmlFor="username">Username</label>
@@ -144,8 +116,8 @@ export default class Register extends Component {
                     type="text"
                     className="form-control"
                     name="username"
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
+                    value={username}
+                    onChange={onChangeUsername}
                     validations={[required, vusername]}
                   />
                 </div>
@@ -156,8 +128,8 @@ export default class Register extends Component {
                     type="text"
                     className="form-control"
                     name="email"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
+                    value={email}
+                    onChange={onChangeEmail}
                     validations={[required, email]}
                   />
                 </div>
@@ -168,8 +140,8 @@ export default class Register extends Component {
                     type="password"
                     className="form-control"
                     name="password"
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
+                    value={password}
+                    onChange={onChangePassword}
                     validations={[required, vpassword]}
                   />
                 </div>
@@ -180,17 +152,17 @@ export default class Register extends Component {
               </div>
             )}
 
-            {this.state.message && (
+            {{message} && (
               <div className="form-group">
                 <div
                   className={
-                    this.state.successful
+                    {successful}
                       ? "alert alert-success"
                       : "alert alert-danger"
                   }
                   role="alert"
                 >
-                  {this.state.message}
+                  {message}
                 </div>
               </div>
             )}
@@ -205,4 +177,5 @@ export default class Register extends Component {
       </div>
     );
   }
-}
+
+export default Register;
