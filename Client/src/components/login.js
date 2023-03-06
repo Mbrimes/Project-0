@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -17,27 +17,45 @@ const required = value => {
   }
 };
 
-const Login = (props) =>{
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
 
-  const onChangeUsername = e = {
-   setUsername(e.target.value)
- };
-  const onChangePassword = e = { setPassword(e.target.value)};
+    this.state = {
+      username: "",
+      password: "",
+      loading: false,
+      message: ""
+    };
+  }
 
-  const handleLogin = e = {
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value
+    });
+  }
+
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value
+    });
+  }
+
+  handleLogin(e) {
     e.preventDefault();
 
-    setMessage({ message: "" });
-    setLoading({ loading: true });
+    this.setState({
+      message: "",
+      loading: true
+    });
 
-    const form = validateAll();
+    this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.login({username}, {password}).then(
+      AuthService.login(this.state.username, this.state.password).then(
         () => {
           this.props.router.navigate("/profile");
           window.location.reload();
@@ -50,92 +68,32 @@ const Login = (props) =>{
             error.message ||
             error.toString();
 
-          setMessage({ message: resMessage });
-          setLoading({ loading: false });
+          this.setState({
+            loading: false,
+            message: resMessage
+          });
         }
       );
     } else {
-          setLoading({ loading: false });
+      this.setState({
+        loading: false
+      });
     }
   }
-
-
-  // constructor(props) {
-  //   super(props);
-  //   this.handleLogin = this.handleLogin.bind(this);
-  //   this.onChangeUsername = this.onChangeUsername.bind(this);
-  //   this.onChangePassword = this.onChangePassword.bind(this);
-
-  //   this.state = {
-  //     username: "",
-  //     password: "",
-  //     loading: false,
-  //     message: ""
-  //   };
-  // }
-
-  // onChangeUsername(e) {
-  //   this.setState({
-  //     username: e.target.value
-  //   });
-  // }
-
-  // onChangePassword(e) {
-  //   this.setState({
-  //     password: e.target.value
-  //   });
-  // }
-
-  // handleLogin(e) {
-  //   e.preventDefault();
-
-  //   this.setState({
-  //     message: "",
-  //     loading: true
-  //   });
-
-  //   this.form.validateAll();
-
-  //   if (this.checkBtn.context._errors.length === 0) {
-  //     AuthService.login(this.state.username, this.state.password).then(
-  //       () => {
-  //         this.props.router.navigate("/profile");
-  //         window.location.reload();
-  //       },
-  //       error => {
-  //         const resMessage =
-  //           (error.response &&
-  //             error.response.data &&
-  //             error.response.data.message) ||
-  //           error.message ||
-  //           error.toString();
-
-  //         this.setState({
-  //           loading: false,
-  //           message: resMessage
-  //         });
-  //       }
-  //     );
-  //   } else {
-  //     this.setState({
-  //       loading: false
-  //     });
-  //   }
-  // }
 
     return (
       <div className="col-md-12">
         <div className="card card-container">
           <img
-            src="#"
+            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
             alt="profile-img"
             className="profile-img-card"
           />
 
           <Form
-            onSubmit={handleLogin}
+            onSubmit={this.handleLogin}
             ref={c => {
-              {form} = c;
+              this.form = c;
             }}
           >
             <div className="form-group">
@@ -144,8 +102,8 @@ const Login = (props) =>{
                 type="text"
                 className="form-control"
                 name="username"
-                value={username}
-                onChange={onChangeUsername}
+                value={this.state.username}
+                onChange={this.onChangeUsername}
                 validations={[required]}
               />
             </div>
@@ -156,8 +114,8 @@ const Login = (props) =>{
                 type="password"
                 className="form-control"
                 name="password"
-                value={password}
-                onChange={onChangePassword}
+                value={this.state.password}
+                onChange={this.onChangePassword}
                 validations={[required]}
               />
             </div>
@@ -165,19 +123,19 @@ const Login = (props) =>{
             <div className="form-group">
               <button
                 className="btn btn-primary btn-block"
-                disabled={loading}
+                disabled={this.state.loading}
               >
-                {loading && (
+                {this.state.loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
                 <span>Login</span>
               </button>
             </div>
 
-            {message && (
+            {this.state.message && (
               <div className="form-group">
                 <div className="alert alert-danger" role="alert">
-                  {message}
+                  {this.state.message}
                 </div>
               </div>
             )}
@@ -191,6 +149,6 @@ const Login = (props) =>{
         </div>
       </div>
     );
-  } 
+}
 
 export default withRouter(Login);
