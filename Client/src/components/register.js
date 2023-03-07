@@ -16,7 +16,7 @@ const required = value => {
   }
 };
 
-const email = value => {
+const Email = value => {
   if (!isEmail(value)) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -108,7 +108,7 @@ const handleRegister = e => {
               this.form = c;
             }}
           >
-            {!{successful} && (
+            {!successful && (
               <div>
                 <div className="form-group">
                   <label htmlFor="username">Username</label>
@@ -130,7 +130,7 @@ const handleRegister = e => {
                     name="email"
                     value={email}
                     onChange={onChangeEmail}
-                    validations={[required, email]}
+                    validations={[required, Email]}
                   />
                 </div>
 
@@ -152,7 +152,7 @@ const handleRegister = e => {
               </div>
             )}
 
-            {{message} && (
+            {message && (
               <div className="form-group">
                 <div
                   className={
