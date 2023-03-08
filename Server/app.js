@@ -6,10 +6,8 @@ const cors = require('cors');
 
 // routes
 const books = require('./routes/api/books'); 
-// const auth = require('./routes/auth.routes');
-// const user = require('./routes/user.routes');
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
+const auth = require('./routes/auth.routes');
+const user = require('./routes/user.routes'); 
 
 const app = express();  
 
@@ -29,8 +27,8 @@ app.get('/', (req, res) => res.send('Hello world am done with MERN Stack!'));
 
 // use Routes
 app.use('/api/books', books);
-// app.use('/auth.routes', auth);
-// app.use('/user.routes', user);
+app.use('/auth.routes', auth);
+app.use('/user.routes', user);
 
 const port = process.env.PORT || 5000;
 
