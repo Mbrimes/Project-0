@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const config = require('config');
-const db = config.get('mongoURI'); 
+const db = config.get('mongoURI');
+const dbs = require("../models");
+const Role = dbs.role; 
 
 const connectDB = async () => {
   try {
@@ -17,8 +19,6 @@ const connectDB = async () => {
   };  
 };
 
-const dbs = require("../models");
-const Role = dbs.role;
 
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
