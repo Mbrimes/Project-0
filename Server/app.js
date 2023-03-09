@@ -9,7 +9,11 @@ const books = require('./routes/api/books');
 const auth = require('./routes/auth.routes');
 const user = require('./routes/user.routes'); 
 
-const app = express();  
+const app = express(); 
+
+var corsOptions = {
+  origin: "http://localhost:8081"
+}; 
 
 // Connect Database
 connectDB(); 
@@ -30,7 +34,7 @@ app.use('/api/books', books);
 app.use('/auth.routes', auth);
 app.use('/user.routes', user);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
