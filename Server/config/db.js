@@ -5,18 +5,32 @@ const dbs = require("../models");
 const Role = dbs.role; 
 
 const connectDB = async () => {
-  try {
-    mongoose.set('strictQuery', true);
-    await mongoose.connect(db, {
-      useNewUrlParser: true,
-    });
+  // try {
+  //   mongoose.set('strictQuery', true);
+  //   await mongoose.connect(db, {
+  //     useNewUrlParser: true,
+  //   });
 
-    console.log('MongoDB is Connected...');
+  //   console.log('MongoDB is Connected...');
+  //   initial();
+  // } catch (err) {
+  //   console.error(err.message);
+  //   process.exit(1);
+  // };  
+
+  db.mongoose.set('strictQuery', true);
+db.mongoose
+  .connect(db, {
+    useNewUrlParser: true, 
+  })
+  .then(() => {
+    console.log("Successfully connect to MongoDB.");
     initial();
-  } catch (err) {
-    console.error(err.message);
-    process.exit(1);
-  };  
+  })
+  .catch(err => {
+    console.error("Connection error", err);
+    process.exit();
+  });
 };
 
 
