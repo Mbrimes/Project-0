@@ -52,7 +52,7 @@ function UpdateBookInfo(props) {
 		};
 
 		axios
-			.put(`http://localhost:5000/api/books/${id}` , data)
+			.put(`http://localhost:8080/api/books/${id}` , data)
 			.then((res) => {
 				navigate(`/show-book/${id}`);
 			})
