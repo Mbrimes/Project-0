@@ -5,18 +5,13 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 
 // routes
-const books = require('./routes/api/books'); 
-const auth = require('./routes/api/auth');
-const user = require('./routes/api/user'); 
+const books = require('./routes/api/books');  
 
 const app = express(); 
 
 var corsOptions = {
   origin: "http://localhost:8081"
-}; 
-
-// Connect Database
-connectDB(); 
+};  
 
 // cors
 app.use(cors({ origin: true, credentials: true }));
@@ -27,12 +22,15 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+// Connect Database
+connectDB(); 
+
 app.get('/', (req, res) => res.send('Hello world am done with MERN Stack!'));
 
 // use Routes
 app.use('/api/books', books);
-app.use('/api/auth', auth);
-app.use('/api/user', user);
+require('./routes/api/auth')(app);
+require('./routes/api/user')(app); 
 
 const port = process.env.PORT || 8080;
 
