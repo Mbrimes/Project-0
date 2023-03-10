@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from 'react-router-dom';
 import UserService from "../../services/user.service";
 import EventBus from "../../common/EventBus";
 
@@ -33,6 +33,11 @@ const BoardUser = () => {
       <header className="jumbotron">
         <h3>{content}</h3>
       </header>
+      <Link
+            to='/showbook'
+            className=''>
+              + Add New Book
+          </Link>
     </div>
   );
 };
