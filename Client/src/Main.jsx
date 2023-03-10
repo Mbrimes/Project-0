@@ -35,11 +35,11 @@ const Main = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/"} className="navbar-brand">
-          bezKoder
+      <nav className="">
+        <Link to={"/"} className="">
+          Marabian Reader
         </Link>
-        <div className="navbar-nav mr-auto">
+        <div className="">
           <li className="nav-item">
             <Link to={"/home"} className="nav-link">
               Home
