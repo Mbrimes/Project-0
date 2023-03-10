@@ -97,6 +97,7 @@ const Main = () => {
           <Route path="/register" element={<Register/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/user" element={<BoardUser/>} />
+          <Route exact path='/showbook' element={<ShowBookList />} />
           <Route path='/create-book' element={<CreateBook />} />
           <Route path='/edit-book/:id' element={<UpdateBookInfo />} />
           <Route path='/show-book/:id' element={<ShowBookDetails />} />
