@@ -18,7 +18,7 @@ function UpdateBookInfo(props) {
 
 	useEffect(() => {
 		axios
-			.get(`http://localhost:5000/api/books/${id}`)
+			.get(`http://localhost:8080/api/books/${id}`)
 			.then((res) => {
 				setBook({
 					title: res.data.title,

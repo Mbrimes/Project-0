@@ -9,6 +9,10 @@ import Home from "./components/Login/Home";
 import Profile from "./components/Login/Profile";
 import BoardUser from "./components/Login/BoardUser";
 import EventBus from "./common/EventBus";
+import CreateBook from './components/CreateBook';
+import ShowBookList from './components/ShowBookList';
+import ShowBookDetails from './components/ShowBookDetails';
+import UpdateBookInfo from './components/UpdateBookInfo';
 
 const Main = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -93,6 +97,9 @@ const Main = () => {
           <Route path="/register" element={<Register/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/user" element={<BoardUser/>} />
+          <Route path='/create-book' element={<CreateBook />} />
+          <Route path='/edit-book/:id' element={<UpdateBookInfo />} />
+          <Route path='/show-book/:id' element={<ShowBookDetails />} />
         </Routes>
       </div>
 
