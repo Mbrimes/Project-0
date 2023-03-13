@@ -16,6 +16,26 @@ const required = (value) => {
   }
 };
 
+const vfirstname = (value) => {
+  if (value.length < 3 || value.length > 30) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Firstname must be between 3 and 20 characters.
+      </div>
+    );
+  }
+};
+
+const vlastname = (value) => {
+  if (value.length < 3 || value.length > 30) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Lastname must be between 3 and 20 characters.
+      </div>
+    );
+  }
+};
+
 const validEmail = (value) => {
   if (!isEmail(value)) {
     return (
@@ -50,13 +70,26 @@ const Register = () => {
   const form = useRef();
   const checkBtn = useRef();
 
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
-  const onChangeUsername = (e) => {
+    const onChangeFirstname = (e) => {
+    const firstname = e.target.value;
+    setFirstname(firstname);
+  };
+
+  const onChangeLastname = (e) => {
+    const lastname = e.target.value;
+    setLastname(lastname);
+  };
+
+
+    const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
   };
@@ -80,7 +113,7 @@ const Register = () => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(username, email, password).then(
+      AuthService.register(firstname, lastname, username, email, password).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
@@ -112,6 +145,30 @@ const Register = () => {
         <Form onSubmit={handleRegister} ref={form}>
           {!successful && (
             <div>
+              <div className="form-group">
+                <label htmlFor="firstname">Firstname</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="firstname"
+                  value={firstname}
+                  onChange={onChangeFirstname}
+                  validations={[required, vfirstname]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="lastname">Lastname</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="lastname"
+                  value={lastname}
+                  onChange={onChangeLastname}
+                  validations={[required, vlastname]}
+                />
+              </div>
+
               <div className="form-group">
                 <label htmlFor="username">Username</label>
                 <Input
