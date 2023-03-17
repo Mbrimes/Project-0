@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-import ToBeRead from '../models/tbr.js';
+const ToBeRead = require('../models/tbr');
 
 //function to retrieve posts
-export const tbrPosts = async (req, res) => {
+exports.tbrPosts = async (req, res) => {
 	try{
 		const tbrBooks = await ToBeRead.find({ creator: req.userId});
 		console.log(tbrBooks);
@@ -12,7 +12,7 @@ export const tbrPosts = async (req, res) => {
 };
 
 // Functionality to add/crete new posts
-export const createTbrPost = async (req, res) => {
+exports.createTbrPost = async (req, res) => {
 	const tbrPost = req.body;
 
 	const newTbrBook = new ToBeRead({
@@ -31,7 +31,7 @@ export const createTbrPost = async (req, res) => {
 };
 
 //Delete post
-export const deleteTbrBook = async (req, res) => {
+exports.deleteTbrBook = async (req, res) => {
 	const {id} = req.params;
 
 	if (!mongoose.Types.ObjectId.isValid(id))

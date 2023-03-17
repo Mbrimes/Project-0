@@ -1,12 +1,8 @@
-const express = require('express');
+const controller = require('../../controllers/readposts'); 
+const { authJwt } = require("../../middleware");
 
-import { readPosts, createReadPost, deleteReadBook } from '../../controllers/readposts.js';
-import verifyToken from "../../middleware/authjwt.js";
-
-const router = express.Router(); 
-
-router.get('/', verifyToken, readPosts);
-router.post('/', verifyToken, createReadPost);
-router.delete('/:id', verifyToken, deleteReadBook);
-
-export default router;
+module.exports = function(app){
+app.get('/', [authJwt.verifyToken], controller.readPosts);
+app.post('/', [authJwt.verifyToken], controller.createReadPost);
+app.delete('/:id', [authJwt.verifyToken], controller.deleteReadBook);
+};

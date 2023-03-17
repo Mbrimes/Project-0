@@ -3,9 +3,9 @@
   "name": "Mern App Sample",
   "icons": [ 
     {
-      "src": "log.png",
-      "type": "image/png",
-      "sizes": "62x82"
+      "src": "favicon.ico",
+      "type": "image/ico",
+      "sizes": "32x32"
     }
   ],
   "start_url": ".",

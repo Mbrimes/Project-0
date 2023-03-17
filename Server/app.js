@@ -5,10 +5,7 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 
 // routes
-const books = require('./routes/api/books');
-const readingRoutes = require('./routes/api/reading');
-const readRoutes = require('./routes/api/read');
-const tbrRoutes = require('./routes/api/tbr')
+const books = require('./routes/api/books'); 
 
 const app = express(); 
 
@@ -32,9 +29,9 @@ app.get('/', (req, res) => res.send("Welcome to Marabian Books Library, if you s
 
 // use Routes
 app.use('/api/books', books);
-app.use('/api/reading', readingRoutes);
-app.use('/api/read', readRoutes);
-app.use('/api/tbr', tbrRoutes);
+require('./routes/api/reading')(app);
+require('./routes/api/read')(app);
+require('./routes/api/tbr')(app);
 require('./routes/api/auth')(app);
 require('./routes/api/user')(app); 
 

@@ -1,11 +1,8 @@
-const express = require('express');
+const controller = require('../../controllers/tbr'); 
+const { authJwt } = require("../../middleware");
 
-import { tbrPosts, createTbrPost, deleteTbrBook } from '../../controllers/tbr.js';
-import verifyToken from "../../middleware/authjwt.js";
-
-const router = express.Router();
-
-router.get('/', verifyToken, tbrPosts);
-router.post('/', verifyToken, createTbrPost);
-router.delete('/', verifyToken, deleteTbrBook);
-export default router;
+module.exports = function(app) {
+app.get('/', [authJwt.verifyToken], controller.tbrPosts);
+app.post('/', [authJwt.verifyToken], controller.createTbrPost);
+app.delete('/', [authJwt.verifyToken], controller.deleteTbrBook);
+};

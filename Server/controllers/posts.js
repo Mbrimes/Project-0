@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-
-import PostBook from '../models/postBook.js';
+const PostBook = require('../models/postBook');
 
 // function to retrieving posts
-export const readingPosts = async (req, res) => {
+exports.readingPosts = async (req, res) => {
   try {
     const postBooks = await PostBook.find({ creator: req.userId });
     console.log(postBooks);
@@ -14,7 +13,7 @@ export const readingPosts = async (req, res) => {
 };
 
 //Functionality to add/create new posts
-export const createreadingPost = async (req, res) => {
+exports.createreadingPost = async (req, res) => {
 	const bookPost = req.body;
 
 	const newBookPost = new PostBook({
@@ -33,7 +32,7 @@ export const createreadingPost = async (req, res) => {
 };
 
 //Updating the posts
-export const updatePost = async (req, res) => {
+exports.updatePost = async (req, res) => {
 	const {id} = req.params;
 	const post = req.body;
 	const {title, author, pageLength, selectedFile, description} = req.body;
@@ -57,7 +56,7 @@ export const updatePost = async (req, res) => {
 };
 
 // Delete post
-export const deletePost = async (req, res) => {
+exports.deletePost = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id))

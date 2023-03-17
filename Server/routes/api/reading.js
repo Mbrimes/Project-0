@@ -1,13 +1,9 @@
-import { readingPosts, createreadingPost, updatePost, deletePost } from '../../controllers/posts.js';
-import verifyToken from "../../middleware/authjwt.js";
+const controller = require('../../controllers/posts'); 
+const { authJwt } = require("../../middleware");
 
-const express = require('express');
-
-const router = express.Router();
-
-router.get('/', verifyToken, readingPosts);
-router.post('/', verifyToken, createreadingPost);
-router.patch('/:id', verifyToken, updatePost);
-router.delete('/:id', verifyToken, deletePost);
-
-export default router;
+module.exports = function(app){
+app.get('/', [authJwt.verifyToken], controller.readingPosts);
+app.post('/', [authJwt.verifyToken], controller.createreadingPost);
+app.patch('/:id', [authJwt.verifyToken], controller.updatePost);
+app.delete('/:id', [authJwt.verifyToken], controller.deletePost);
+ };
