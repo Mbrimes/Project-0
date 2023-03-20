@@ -1,2 +1,4 @@
-const config = require('config');
-exports.db = () => config.get('mongoURI');
+const config = require('Server');
+const db = config.get('mongoURI');
+
+module.exports = {db};
