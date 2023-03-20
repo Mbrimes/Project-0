@@ -1,4 +1,4 @@
-const config = require('config');
+const config = require('./default');
 const db = config.get('mongoURI');
 
 module.exports = db;
