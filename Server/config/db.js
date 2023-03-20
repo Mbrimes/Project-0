@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 //const config = require('config');
 //const db = config.get('mongoURI');
-const db = require('../dbo')
+const db = require('../dbo.js')
 const dbs = require("../models");
 const Role = dbs.role; 
  
