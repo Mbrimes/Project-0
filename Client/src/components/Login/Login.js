@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 
 import AuthService from "../../services/auth.service";
 
@@ -26,6 +27,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = (e) =>
+    setShowPassword((prevShowPassword) => !prevShowPassword);
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -76,13 +81,17 @@ const Login = () => {
           alt="profile-img"
           className="profile-img-card"
         />*/}
+         
+        <h1>Login to Blookify</h1>
+
 
         <Form onSubmit={handleLogin} ref={form}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
+          <div className="form-group"> 
             <Input
               type="text"
               className="form-control"
+              label="Username"
+              placeholder="Username*"
               name="username"
               value={username}
               onChange={onChangeUsername}
@@ -91,15 +100,23 @@ const Login = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            {/*<label htmlFor="password">Password</label>*/}
             <Input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password*"
               className="form-control"
               name="password"
               value={password}
               onChange={onChangePassword}
               validations={[required]}
             />
+             <i className="show-password" onClick={handleShowPassword}>
+                  {showPassword ? (
+                    <MdVisibility color="#7f5539" size="16px" />
+                  ) : (
+                    <MdVisibilityOff color="#7f5539" size="16px" />
+                  )}
+                </i>
           </div>
 
           <div className="form-group">
@@ -120,6 +137,17 @@ const Login = () => {
           )}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
+        <div>
+            
+            <div className="signup-signin">
+              <p>
+               <Link to="/register" className="btn-1 b-1">
+                    Don't have an account yet?
+                  </Link>
+              </p>
+            </div>
+
+          </div>
       </div>
     </div>
   );

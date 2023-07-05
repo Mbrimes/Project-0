@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import AuthService from "../../services/auth.service";
 
 import UserService from "../../services/user.service";
 
 const Home = () => {
   const [content, setContent] = useState("");
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [currentUser, setCurrentUser] = useState(undefined);
 
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, []);
   useEffect(() => {
     UserService.getPublicContent().then(
       (response) => {
@@ -31,25 +39,24 @@ const Home = () => {
       <div>
           <div className="text-container">
               <h1>
-                {user
-                  ? `Welcome,  ${user.result.name}`
-                  : 'Welcome to Blookify,'}
+                {currentUser
+                  ? `Welcome,  ${currentUser.username}`
+                  : 'Welcome to Blookify'}
               </h1>
               <p>
-                Utilize over 7 million books and store the books you are
+                Utilizes over 7 million books and store the books you are
                 currently reading and the books that youve finished into your
                 own personal library.
               </p>
            
               <div className="button-cont">
-                {user ? null : (
+                {currentUser ? null : (
                   <Link to="/login" className="btn-1 b-1">
                     Login
                   </Link>
                 )}
 
-                <Link to={user ? '/Addbook' : '/login'} className="btn-1 b-2">
-                  Get started
+                <Link to={currentUser ? '/Addbook' : '/register'} className="btn-1 b-2">   Get started
                 </Link>
               </div>
             

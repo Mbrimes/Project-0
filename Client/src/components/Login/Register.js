@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 
 import AuthService from "../../services/auth.service";
 
@@ -77,6 +78,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
     const onChangeFirstname = (e) => {
     const firstname = e.target.value;
@@ -103,6 +105,9 @@ const Register = () => {
     const password = e.target.value;
     setPassword(password);
   };
+
+   const handleShowPassword = (e) =>
+    setShowPassword((prevShowPassword) => !prevShowPassword);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -136,20 +141,16 @@ const Register = () => {
   return (
     <div className="col-md-12">
       <div className="card card-container">
-       {/* <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />*/}
+         <h1>Sign Up to Blookify</h1>
 
         <Form onSubmit={handleRegister} ref={form}>
           {!successful && (
             <div>
               <div className="form-group">
-                <label htmlFor="firstname">Firstname</label>
-                <Input
+                <Input 
                   type="text"
                   className="form-control"
+                   placeholder="First Name*"
                   name="firstname"
                   value={firstname}
                   onChange={onChangeFirstname}
@@ -157,11 +158,11 @@ const Register = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="lastname">Lastname</label>
-                <Input
+             <div className="form-group"> 
+                <Input 
                   type="text"
                   className="form-control"
+                   placeholder="Last Name*"
                   name="lastname"
                   value={lastname}
                   onChange={onChangeLastname}
@@ -169,11 +170,11 @@ const Register = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <Input
+              <div className="form-group"> 
+                <Input 
                   type="text"
                   className="form-control"
+                   placeholder="UserName*"
                   name="username"
                   value={username}
                   onChange={onChangeUsername}
@@ -181,11 +182,11 @@ const Register = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
+              <div className="form-group">    
                 <Input
                   type="text"
                   className="form-control"
+                   placeholder="Email*"
                   name="email"
                   value={email}
                   onChange={onChangeEmail}
@@ -193,16 +194,23 @@ const Register = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
+              <div className="form-group"> 
                 <Input
-                  type="password"
+                   type={showPassword ? 'text' : 'password'}
                   className="form-control"
+                  placeholder="Password*"
                   name="password"
                   value={password}
                   onChange={onChangePassword}
                   validations={[required, vpassword]}
                 />
+                <i className="show-password" onClick={handleShowPassword}>
+                  {showPassword ? (
+                    <MdVisibility color="#7f5539" size="16px" />
+                  ) : (
+                    <MdVisibilityOff color="#7f5539" size="16px" />
+                  )}
+                </i>
               </div>
 
               <div className="form-group">
