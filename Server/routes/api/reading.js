@@ -21,8 +21,8 @@ module.exports = function(app){
     );
     next();
   });
-    app.get('/api/test/reading', [authJwt.verifyToken], controller.readingPosts);
-    app.post('/api/test/createreading', [authJwt.verifyToken], controller.createreadingPost);
-    app.patch('/api/test/updatepost', [authJwt.verifyToken], controller.updatePost);
-    app.delete('/api/test/deletepost', [authJwt.verifyToken], controller.deletePost);
+    app.get('/', [authJwt.verifyToken], controller.readingPosts);
+    app.post('/', [authJwt.verifyToken], controller.createreadingPost);
+    app.patch('/:id', [authJwt.verifyToken], controller.updatePost);
+    app.delete('/:id', [authJwt.verifyToken], controller.deletePost);
  };
