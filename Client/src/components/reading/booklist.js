@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { GiBookshelf, GiBurningBook, GiBookCover } from 'react-icons/gi';
-import { FaCaretDown, FaBook } from 'react-icons/fa';
+import { FaCaretDown } from 'react-icons/fa';
 //
 import { createPost } from '../../actions/posts';
 import { createReadBook } from '../../actions/readposts';
 import { createTbrBook } from '../../actions/tbr';
 // img
-import pic1 from '../../assets/noimage.png';
+//import pic1 from '../../assets/noimage.png';
 
 function Booklist(props) {
 	const bookData = {
 		title: props.title,
 		author: props.author[0],
 		pageLength: props.pgcount,
-		selectedFile: props.imgurl ? props.imgurl['thumbnail'] : pic1,
-		description: props.description ? props.description : 'No description',
+		description: props.description ? props.description : "No description",
+		selectedFile: props.imgurl ? props.imgurl['thumbnail'] : "pic1",
 	};
 
 	const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function Booklist(props) {
 
 	const readSubmit = (e) => {
 		e.preventDefault();
-		dsipatch(createReadBook(bookData));
+		dispatch(createReadBook(bookData));
 	};
 
 	const tbrSubmit = (e) => {
@@ -50,26 +50,28 @@ function Booklist(props) {
 
   	return(
   		<div className="booklist">
-  			<img 
+  			<img description
   				value={props.imgvalue}
-  				src={props.imgurl ? props.imgurl['thumbnail'] : pic1}
+  				src={props.imgurl ? props.imgurl['thumbnail'] : ""}
   				className="img"
   				alt={props.alt} 
   			/>
   			<h1 className="title-header" value={props.titleValue}> {props.title} </h1>
   			<p className="author-p">Author: {props.author}</p>
+  			<p className="description">Description: {props.description ? props.description: 'No-description'}</p>
   			<p className="pg-count"> pg count: {props.pgcount ? props.pgcount : 'N/A'} </p>
   			<div className="add-book">
   				<p className={popup ? 'popup' : 'none'}> Send to Reading 
   					<span><FaCaretDown className="caretdown"/></span>
   				</p>
+  				<button className="try" onClick={ (e) => {
+  						handleSubmit(e);
+  						props.Toggle(e);
+  					}}>
   				<GiBookCover 
   					onMouseEnter={TogglePopup}
   					onMouseLeave={TogglePopup}
-  					onClick={ (e) => {
-  						handleSubmit(e);
-  						props.Toggle(e);
-  					}}/>
+  					/></button>
   			</div>
   			<div className="add-book">
   				<p className = {popup2 ? 'popup' : 'none'}> Send to Read

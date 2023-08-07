@@ -1,34 +1,60 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
-import Form from './form'
+import { useSelector } from 'react-redux';
+import Form from './form';
 
-const BookModal = (props) => {
-	const [show, setShow] = useState(false);
-	const [show1, setShow1] = useState(true);
-	const [modal, setModal] = useState('');
+class BookModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+      show1: true,
+      modal: '',
+    };
+  }
 
- return(
- 	<div>
- 		<button type="button" onClick={ (e) => {
-      setShow(true);
-      setModal('modal');
-    }}> Add your own Book</button>
-
- 		<Fade opposite when={this.state.show}>
+  render() {
+    return (
+      <div className="modal-btn-cnt">
+        <button
+          className="modal-button"
+          type="button"
+          onClick={() => {
+            this.setState({
+              show: true,
+              modal: 'modal',
+            });
+          }}
+        >
+          Add your own book
+        </button>
+        
           <div className={this.state.modal}>
-            <Slide up opposite when={this.state.show1}>
               <div className="modal-box">
-                <div onClick={ (e) => {
-                  setShow(false);
-                  setModal('');
-                }} className="closebutton">
+                <div
+                  onClick={() => {
+                    this.setState({
+                      show: false,
+                      modal: '',
+                    });
+                  }}
+                  className="closebutton"
+                >
                   X
                 </div>
+                {/* Form inside modal */}
+                <Form
+                // closeModal={() => {
+                //   this.setState({
+                //     show: false,
+                //     show1: true,
+                //   });
+                // }}
+                />
               </div>
-            </Slide>
           </div>
-        </Fade>
- 	</div>
- 	);
+      </div>
+    );
+  }
 }
+
 export default BookModal;

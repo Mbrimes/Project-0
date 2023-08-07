@@ -9,13 +9,24 @@ import Home from "./components/Login/Home";
 import Profile from "./components/Login/Profile";
 import BoardUser from "./components/Login/BoardUser";
 import EventBus from "./common/EventBus";
-import CreateBook from './components/CreateBook';
-import ShowBookList from './components/ShowBookList';
-import ShowBookDetails from './components/ShowBookDetails';
-import UpdateBookInfo from './components/UpdateBookInfo';
+//import CreateBook from './components/CreateBook';
+//import ShowBookList from './components/ShowBookList';
+//import ShowBookDetails from './components/ShowBookDetails';
+//import UpdateBookInfo from './components/UpdateBookInfo';
+//import Test from './components/test';
+import Addbook from './components/reading/Addbook';
+import CurrentlyReading from './components/reading/currentlyreading';
+import Read from './components/read/read';
+import ToBeRead from './components/tbr/toberead';
+//import Nav from './components/navbar';
+import { getPosts } from './actions/posts.js';
+import { getReadBook } from './actions/readposts.js';
+import { useDispatch } from 'react-redux';
+
 
 const Main = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
+  const dispatch = useDispatch();
   useEffect(() => {
     const user = AuthService.getCurrentUser();
 
@@ -31,6 +42,10 @@ const Main = () => {
       EventBus.remove("logout");
     };
   }, []);
+
+  useEffect(() => {
+    dispatch(getReadBook(), getPosts());
+  }, [dispatch]);
 
   const logOut = () => {
     AuthService.logout();
@@ -97,10 +112,14 @@ const Main = () => {
           <Route path="/register" element={<Register/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/user" element={<BoardUser/>} />
-          <Route exact path='/showbook' element={<ShowBookList />} />
+         {/* <Route exact path='/showbook' element={<ShowBookList />} />
           <Route path='/create-book' element={<CreateBook />} />
           <Route path='/edit-book/:id' element={<UpdateBookInfo />} />
-          <Route path='/show-book/:id' element={<ShowBookDetails />} />
+          <Route path='/show-book/:id' element={<ShowBookDetails />} />*/}
+          <Route path="/addbook" element={<Addbook/>} />
+        <Route path="/currentlyreading" element={<CurrentlyReading/>} />
+        <Route path="/read" element={<Read/>} />
+        <Route path="/toberead" element={<ToBeRead/>} />
         </Routes>
       </div>
 

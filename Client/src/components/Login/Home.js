@@ -56,7 +56,7 @@ const Home = () => {
                   </Link>
                 )}
 
-                <Link to={currentUser ? '/Addbook' : '/register'} className="btn-1 b-2">   Get started
+                <Link to={currentUser ? '/addbook' : '/register'} className="btn-1 b-2">   Get started
                 </Link>
               </div>
             

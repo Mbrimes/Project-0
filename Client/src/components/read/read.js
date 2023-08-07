@@ -8,7 +8,8 @@ import Emptybook from '../reading/emptybook';
 const Read = () => {
 	const readBooks = useSelector((state) => state.read);
 
-	return !readBooks.length ? (
+	return (
+		!readBooks.length ? (
 		<Emptybook 
 			emptybook= "You have no finished books here yet!"
 			routeto= '/currentlyreading'
@@ -17,10 +18,10 @@ const Read = () => {
 		) : (
 		<div className="main-container">
 			<Nav menuicon= "menu-link-hidden"/>
-			<Slide bottom cascade>
+			
 				<h1 className="currently-reading-h1"> Read books </h1>
-			<Slide>
-			<Row className="profile-row">
+			
+			<div className="profile-row">
 				<sidebar/>
 				<div className="reading-container">
 					{readBooks.map((post) => (
@@ -30,9 +31,10 @@ const Read = () => {
 							/>
 							))}
 				</div>
-				</Row>
+				</div>
 				</div> 
-	);
+	)
+		);
 };
 
 export default Read;
