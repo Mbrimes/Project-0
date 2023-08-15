@@ -1,15 +1,4 @@
-// const express = require('express');
-// const controller = require('../../controllers/readposts');
-// const { authJwt } = require("../../middleware");
-
-// const router = express.Router();
-
-// router.get('/api/read', [authJwt.verifyToken], controller.readPosts);
-// router.post('/', [authJwt.verifyToken], controller.createReadPost);
-// router.delete('/:id', [authJwt.verifyToken], controller.deleteReadBook);
-// module.exports = router;
-
-const controller = require('../../controllers/readposts'); 
+const controller = require('../../controllers/readposts');  
 const { authJwt } = require("../../middleware");
 
 module.exports = function(app){
