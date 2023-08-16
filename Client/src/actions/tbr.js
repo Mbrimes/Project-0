@@ -1,9 +1,9 @@
-import * as api from '../api';
+import BookService from '../api';
 
 // Action creators
 export const getTbrBook = () => async (dispatch) => {
   try {
-    const { data } = await api.fetchTbrBook();
+    const { data } = await BookService.fetchTbrBook();
     dispatch({ type: 'FETCH_TBR_BOOKS', payload: data });
   } catch (error) {
     console.log(error);
@@ -13,7 +13,7 @@ export const getTbrBook = () => async (dispatch) => {
 // Create post function
 export const createTbrBook = (tbr) => async (dispatch) => {
   try {
-    const { data } = await api.createTbrBook(tbr);
+    const { data } = await BookService.createTbrBook(tbr);
 
     dispatch({ type: 'CREATE_TBR_BOOK', payload: data });
   } catch (error) {
@@ -22,11 +22,11 @@ export const createTbrBook = (tbr) => async (dispatch) => {
 };
 
 //Delete TBR Function
-export const deleteTbrBook = (id3) => async (dispatch) => {
+export const deleteTbrBook = (id) => async (dispatch) => {
   try {
-    await api.deleteTbrBook(id3);
+    await BookService.deleteTbrBook(id);
 
-    dispatch({ type: 'DELETE_TBR_BOOK', payload: id3 });
+    dispatch({ type: 'DELETE_TBR_BOOK', payload: id });
   } catch (error) {
     console.log(error);
   }

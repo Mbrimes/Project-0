@@ -20,7 +20,7 @@ module.exports = function(app) {
     );
     next();
   });
-	app.get('/', [authJwt.verifyToken], controller.tbrPosts);
-	app.post('/', [authJwt.verifyToken], controller.createTbrPost);
-	app.delete('/', [authJwt.verifyToken], controller.deleteTbrBook);
+	app.get("/api/tbr", [authJwt.verifyToken], controller.tbrPosts);
+	app.post("/api/tbr", [authJwt.verifyToken], controller.createTbrPost);
+	app.delete("/api/tbr/:id", [authJwt.verifyToken], controller.deleteTbrBook);
 };

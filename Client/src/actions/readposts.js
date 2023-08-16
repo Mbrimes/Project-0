@@ -1,9 +1,9 @@
-import * as api from '../api';
+import BookService from '../api';
 
 //Action Creators
 export const getReadBook = () => async (dispatch) =>{
 	try {
-		const {data} = await api.fetchReadBooks();
+		const {data} = await BookService.fetchReadBooks();
 		dispatch({ type: 'FETCH_READ_BOOKS', payload: data});
 	} catch (error) {
 		console.log(error);
@@ -13,7 +13,7 @@ export const getReadBook = () => async (dispatch) =>{
 //Create Post Function
 export const createReadBook = (read) => async (dispatch) => {
 	try {
-		const {data} = await api.createReadBook(read);
+		const {data} = await BookService.createReadBook(read);
 		dispatch({ type: 'CREATE_READ_BOOK', payload: data });
 	} catch (error) {
 		console.log(error);
@@ -21,10 +21,10 @@ export const createReadBook = (read) => async (dispatch) => {
 };
 
 //Delete Post Function
-export const deleteReadBook = (id2) => async (dispatch) => {
+export const deleteReadBook = (id) => async (dispatch) => {
   try {
-   await api.deleteReadBook(id2); 
-    dispatch({ type: 'DELETE_READ_BOOK', payload: id2 });
+   await BookService.deleteReadBook(id); 
+    dispatch({ type: 'DELETE_READ_BOOK', payload: id });
   } catch (error) {
     console.log(error);
   }

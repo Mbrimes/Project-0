@@ -9,7 +9,7 @@ module.exports = function(app){
     );
     next();
   });
-	app.get('/', [authJwt.verifyToken], controller.readPosts);
-	app.post('/', [authJwt.verifyToken], controller.createReadPost);
-	app.delete('/:id', [authJwt.verifyToken], controller.deleteReadBook);
+	app.get("/api/read", [authJwt.verifyToken], controller.readPosts);
+	app.post("/api/read", [authJwt.verifyToken], controller.createReadPost);
+	app.delete("/api/read/:id", [authJwt.verifyToken], controller.deleteReadBook);
 };
