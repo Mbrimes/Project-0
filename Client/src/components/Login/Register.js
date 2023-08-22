@@ -55,56 +55,7 @@ const vusername = (value) => {
       </div>
     );
   }
-};
-
-const vpassword = (value) => {
-  // if (value.length < 6 || value.length > 40) {
-  //   return (
-  //     <div className="alert alert-danger" role="alert">
-  //       The password must be between 6 and 40 characters.
-  //     </div>
-  //   );
-  // }
-  if(value==='password'){
-    const uppercaseRegExp   = /(?=.*?[A-Z])/;
-    const lowercaseRegExp   = /(?=.*?[a-z])/;
-    const digitsRegExp      = /(?=.*?[0-9])/;
-    const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
-    const minLengthRegExp   = /.{8,}/;
-    const passwordLength =      value.length;
-    const uppercasePassword =   uppercaseRegExp.test(value);
-    const lowercasePassword =   lowercaseRegExp.test(value);
-    const digitsPassword =      digitsRegExp.test(value);
-    const specialCharPassword = specialCharRegExp.test(value);
-    const minLengthPassword =   minLengthRegExp.test(value);
-    let errMsg ="";
-    if(passwordLength===0){
-            errMsg="Password is empty";
-    }else if(!uppercasePassword){
-            errMsg="At least one Uppercase";
-    }else if(!lowercasePassword){
-            errMsg="At least one Lowercase";
-    }else if(!digitsPassword){
-            errMsg="At least one digit";
-    }else if(!specialCharPassword){
-            errMsg="At least one Special Characters";
-    }else if(!minLengthPassword){
-            errMsg="At least minumum 8 characters";
-    }else{
-        errMsg="";
-    }
-    }
-};
-
-const vcpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
-      </div>
-    );
-  }
-};
+}; 
 
 const Register = () => {
   const form = useRef();
@@ -119,6 +70,8 @@ const Register = () => {
   const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
     const onChangeFirstname = (e) => {
     const firstname = e.target.value;
@@ -150,8 +103,62 @@ const Register = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
 
     const onChangecPassword = (e) => {
-    setConfirmPassword("");
+      const confirmPassword = e.target.value;
+    setConfirmPassword(confirmPassword);
   };
+
+  const passwordvalidations = (e) => {
+
+     const passwordInputValue = e.target.value.trim();
+     const passwordInputFieldName = e.target.name;
+     //for password
+  if(passwordInputFieldName ==='password'){
+    const uppercaseRegExp   = /(?=.*?[A-Z])/;
+    const lowercaseRegExp   = /(?=.*?[a-z])/;
+    const digitsRegExp      = /(?=.*?[0-9])/;
+    const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+    const minLengthRegExp   = /.{6,}/;
+    const passwordLength =      passwordInputValue.length;
+    const uppercasePassword =   uppercaseRegExp.test(passwordInputValue);
+    const lowercasePassword =   lowercaseRegExp.test(passwordInputValue);
+    const digitsPassword =      digitsRegExp.test(passwordInputValue);
+    const specialCharPassword = specialCharRegExp.test(passwordInputValue);
+    const minLengthPassword =   minLengthRegExp.test(passwordInputValue);
+    let errMsg ="";
+    if(passwordLength===0){
+            errMsg="Password is empty";
+    }else if(!uppercasePassword){
+            errMsg="At least one Uppercase";
+    }else if(!lowercasePassword){
+            errMsg="At least one Lowercase";
+    }else if(!digitsPassword){
+            errMsg="At least one digit";
+    }else if(!specialCharPassword){
+            errMsg="At least one Special Characters";
+    }else if(!minLengthPassword){
+            errMsg="At least minumum 6 characters";
+    }else{
+        errMsg="";
+    }
+    setPasswordError(errMsg);
+    }   
+};
+
+//for confirm password 
+const confirmpass= (e)=>{
+            
+      const passwordInputFieldName = e.target.name;
+     if(passwordInputFieldName=== "confirmPassword" || (passwordInputFieldName==="password" && confirmPassword.length>0) ){
+            
+        if(confirmPassword!==password)
+        {
+        setConfirmPasswordError("Confirm password is not matched");
+        }else{
+        setConfirmPasswordError("");
+        }
+        
+    }
+}
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -161,7 +168,13 @@ const Register = () => {
 
     form.current.validateAll();
 
-    if (checkBtn.current.context._errors.length === 0) {
+    if (checkBtn.current.context._errors.length === 0 ){
+
+     if(password !== confirmPassword){
+      setMessage("The passwords doesn't match");
+      return false;
+    } else { setMessage("");}
+
       AuthService.register(firstname, lastname, username, email, password).then(
         (response) => {
           setMessage(response.data.message);
@@ -246,9 +259,10 @@ const Register = () => {
                   name="password"
                   value={password}
                   onChange={onChangePassword}
-                  passwordError={errMsg}
-                  validations={[required, vpassword]}
+                  onKeyUp={passwordvalidations}
+                  validations={[required]}
                 />
+
                 <i className="show-password" onClick={handleShowPassword}>
                   {showPassword ? (
                     <MdVisibility color="#7f5539" size="16px" />
@@ -256,6 +270,7 @@ const Register = () => {
                     <MdVisibilityOff color="#7f5539" size="16px" />
                   )}
                 </i>
+                 <p className="text-danger">{passwordError}</p>
               </div>
               <div className="">
                  <Input
@@ -265,7 +280,8 @@ const Register = () => {
                   name="password"
                   value={confirmPassword}
                   onChange={onChangecPassword}
-                  validations={[required, vcpassword]}
+                  onKeyUp={confirmpass}
+                  validations={[required]}
                 />
                 <i className="show-password" onClick={handleShowPassword}>
                   {showPassword ? (
@@ -274,6 +290,7 @@ const Register = () => {
                     <MdVisibilityOff color="#7f5539" size="16px" />
                   )}
                 </i>
+                <p className="text-danger">{confirmPasswordError}</p>
               </div>
 
               <div className="form-group">
