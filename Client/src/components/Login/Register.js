@@ -58,6 +58,45 @@ const vusername = (value) => {
 };
 
 const vpassword = (value) => {
+  // if (value.length < 6 || value.length > 40) {
+  //   return (
+  //     <div className="alert alert-danger" role="alert">
+  //       The password must be between 6 and 40 characters.
+  //     </div>
+  //   );
+  // }
+  if(value==='password'){
+    const uppercaseRegExp   = /(?=.*?[A-Z])/;
+    const lowercaseRegExp   = /(?=.*?[a-z])/;
+    const digitsRegExp      = /(?=.*?[0-9])/;
+    const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+    const minLengthRegExp   = /.{8,}/;
+    const passwordLength =      value.length;
+    const uppercasePassword =   uppercaseRegExp.test(value);
+    const lowercasePassword =   lowercaseRegExp.test(value);
+    const digitsPassword =      digitsRegExp.test(value);
+    const specialCharPassword = specialCharRegExp.test(value);
+    const minLengthPassword =   minLengthRegExp.test(value);
+    let errMsg ="";
+    if(passwordLength===0){
+            errMsg="Password is empty";
+    }else if(!uppercasePassword){
+            errMsg="At least one Uppercase";
+    }else if(!lowercasePassword){
+            errMsg="At least one Lowercase";
+    }else if(!digitsPassword){
+            errMsg="At least one digit";
+    }else if(!specialCharPassword){
+            errMsg="At least one Special Characters";
+    }else if(!minLengthPassword){
+            errMsg="At least minumum 8 characters";
+    }else{
+        errMsg="";
+    }
+    }
+};
+
+const vcpassword = (value) => {
   if (value.length < 6 || value.length > 40) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -79,6 +118,7 @@ const Register = () => {
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
     const onChangeFirstname = (e) => {
     const firstname = e.target.value;
@@ -108,6 +148,10 @@ const Register = () => {
 
    const handleShowPassword = (e) =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
+
+    const onChangecPassword = (e) => {
+    setConfirmPassword("");
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -202,7 +246,26 @@ const Register = () => {
                   name="password"
                   value={password}
                   onChange={onChangePassword}
+                  passwordError={errMsg}
                   validations={[required, vpassword]}
+                />
+                <i className="show-password" onClick={handleShowPassword}>
+                  {showPassword ? (
+                    <MdVisibility color="#7f5539" size="16px" />
+                  ) : (
+                    <MdVisibilityOff color="#7f5539" size="16px" />
+                  )}
+                </i>
+              </div>
+              <div className="">
+                 <Input
+                   type={showPassword ? 'text' : 'password'}
+                  className="form-control"
+                  placeholder="Confirm Password*"
+                  name="password"
+                  value={confirmPassword}
+                  onChange={onChangecPassword}
+                  validations={[required, vcpassword]}
                 />
                 <i className="show-password" onClick={handleShowPassword}>
                   {showPassword ? (
